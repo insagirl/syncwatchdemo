@@ -146,7 +146,9 @@
     <script type='text/javascript'>
 
 function escapeURL(str) {
-  var code, i, len, x;
+  var code, i, len;
+  
+  var x = "";
   
   for (i = 0, len = str.length; i < len; i++) {
     code = str.charCodeAt(i);
@@ -162,7 +164,9 @@ function escapeURL(str) {
 };
 
 function escapeHtml(str) {
-  var code, i, len, x;
+  var code, i, len;
+  
+  var x = "";
   
   for (i = 0, len = str.length; i < len; i++) {
     code = str.charCodeAt(i);
