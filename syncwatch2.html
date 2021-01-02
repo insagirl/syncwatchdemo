@@ -150,12 +150,8 @@ function escapeHtml(str) {
 
 iframe = (function() {
     var iframe;
-    //var origin = "https://insagirl-toto.appspot.com";
     var origin = "http://127.0.0.1:8080";
-    var origin2 = "https://insagirl.github.io/";
-    var retry = 20;
-    var foundorigin = origin;
-
+    
     function accessible(theiframe) {
         var thedoc;
         try {
@@ -167,34 +163,31 @@ iframe = (function() {
             return false;
         }
     }
-
+    
     return {
         send: function send(x) {
-            if (accessible(iframe))
+            if (iframe)
                 iframe.postMessage(JSON.stringify(x), foundorigin);
             else {
-                retry--;
-                if(retry < 0)
-                  return;
                 var frames = window.parent.frames;
 
                 for (var i = 0; i < frames.length; i++) {
-                    var jy = JSON.stringify(x);
-                    frames[i].postMessage(jy, origin);
-                    frames[i].postMessage(jy, origin2);
+                    frames[i].postMessage(JSON.stringify(x), origin);
                 }
             }
         },
         setReceiver: function setReceiver(f) {
             window.addEventListener("message", function(e) {
-                if (e.origin !== origin && e.origin !== origin2)
+                if (e.origin !== origin)
                     return;
                 try {
                     iframe = e.source;
-                    foundorigin = e.origin
-                    retry = 20;
-                    if (iframe.location.href.indexOf(window.location.href) === -1)
+                    if(accessible(iframe){
+                      if (iframe.location.href.indexOf(window.location.href) === -1)
                         f(JSON.parse(e.data));
+                    } else {
+                      f(JSON.parse(e.data));
+                    }
                 } catch (err) {
                     console.log(err);
                 }
