@@ -136,7 +136,7 @@
     
     <div id="lcwarper" style="height:100%; overflow:hidden; padding-top:25px; margin-top:-25px;">
       <div style="height:100%; width:100%; background-color:black;">
-        <iframe id="lciframe" frameborder="0" src="about:blank" value="transparent" width="100%" height="100%"></iframe>
+        <iframe id="lciframe" frameborder="0" src="about:blank" value="transparent" width="100%" height="100%" marginwidth="0" marginheight="0"></iframe>
       </div>
     </div>
     
@@ -227,10 +227,13 @@ function loadlciframe(url){
               //src += "%26parent=127.0.0.1";
           }
           
+		  if(i === 1 && x[i] === "youtube")
+              src = "https://www.youtube.com/embed/"
+              
           if(i === 1 && x[i] === "twitch")
               istwitch = true;
-              
-          if(i < len-1)
+			  
+          if(istwitch && i < len-1)
               src += "&"
       }
       
