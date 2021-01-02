@@ -547,7 +547,7 @@ window.onload = function() {
                 if(videoList[i].duration < 86400000)
                     tbody += '<td class="videoListTitle"><a href="https://youtu.be/' + videoList[i].vid + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td>' + secondsTommss(~~(videoList[i].duration / 1000)) + '</td><td class="videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
                 else
-                    tbody += '<td class="videoListTitle"><a href="https://lolcast.kr/#/player' + escapeURL(videoList[i].vid) + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td>실시간</td><td class="videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
+                    tbody += '<td class="videoListTitle"><a href="https://lolcast.kr/#/player' + encodeURI(videoList[i].vid) + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td>실시간</td><td class="videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
                 
                 if(vinfo[2] === 1)
                   tbody += '<td class="videoListControl"><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-up" style="color: green;"></i></span><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-down"></i></span>'
