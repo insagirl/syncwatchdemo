@@ -145,8 +145,36 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type='text/javascript'>
 
+function escapeURL(str) {
+  var code, i, len, x;
+  
+  for (i = 0, len = str.length; i < len; i++) {
+    code = str.charCodeAt(i);
+    if (!(code > 47 && code < 58) && // numeric (0-9)
+        !(code > 64 && code < 91) && // upper alpha (A-Z)
+        !(code > 96 && code < 123)) { // lower alpha (a-z)
+      x += str.charAt(0);
+    } else {
+	  x += "%"+code;
+	}
+  }
+  return x;
+};
+
 function escapeHtml(str) {
-  return str.replace(/[\x26\x0A\<>'"]/g,function(r){return"&#"+r.charCodeAt(0)+";"});
+  var code, i, len, x;
+  
+  for (i = 0, len = str.length; i < len; i++) {
+    code = str.charCodeAt(i);
+    if (!(code > 47 && code < 58) && // numeric (0-9)
+        !(code > 64 && code < 91) && // upper alpha (A-Z)
+        !(code > 96 && code < 123)) { // lower alpha (a-z)
+      x += str.charAt(0);
+    } else {
+	  x += "&#"+code+";";
+	}
+  }
+  return x;
 };
 
 iframe = (function() {
@@ -219,12 +247,12 @@ function loadlciframe(url){
       var qname = ["", "ser", "name", "embed", "3ser", "4ser"];
 	  
 	  if(x[1] === "youtube"){
-	    src = "https://www.youtube.com/embed/"+encodeURI(x[2]);
+	    src = "https://www.youtube.com/embed/"+escapeURL(x[2]);
 	  } else if (x[1] === "twitch") {
-	    src = "https://player.twitch.tv/?channel="+encodeURIComponent(x[2])+"&parent=insagirl.github.io&parent=lolcast.kr";
+	    src = "https://player.twitch.tv/?channel="+escapeURL(x[2])+"&parent=insagirl.github.io&parent=lolcast.kr";
 	  } else {
 		  for(var i=1, len=x.length; i<len; i++){
-			  src += qname[i] + "=" + encodeURIComponent(x[i]);
+			  src += qname[i] + "=" + escapeURL(x[i]);
 				  
 			  if(i < len-1)
 				  src += "&"
@@ -515,7 +543,7 @@ window.onload = function() {
                 if(videoList[i].duration < 86400000)
                     tbody += '<td class="videoListTitle"><a href="https://youtu.be/' + videoList[i].vid + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td>' + secondsTommss(~~(videoList[i].duration / 1000)) + '</td><td class="videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
                 else
-                    tbody += '<td class="videoListTitle"><a href="https://lolcast.kr/#/player' + videoList[i].vid + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td>실시간</td><td class="videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
+                    tbody += '<td class="videoListTitle"><a href="https://lolcast.kr/#/player' + escapeURL(videoList[i].vid) + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td>실시간</td><td class="videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
                 
                 if(vinfo[2] === 1)
                   tbody += '<td class="videoListControl"><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-up" style="color: green;"></i></span><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-down"></i></span>'
