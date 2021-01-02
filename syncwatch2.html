@@ -167,7 +167,7 @@ iframe = (function() {
     return {
         send: function send(x) {
             if (iframe)
-                iframe.postMessage(JSON.stringify(x), foundorigin);
+                iframe.postMessage(JSON.stringify(x), origin);
             else {
                 var frames = window.parent.frames;
 
