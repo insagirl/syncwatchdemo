@@ -219,20 +219,12 @@ function loadlciframe(url){
       var qname = ["", "ser", "name", "embed", "3ser", "4ser"];
 	  
 	  if(x[1] === "youtube"){
-	    src = "https://www.youtube.com/embed/"+x[2];
+	    src = "https://www.youtube.com/embed/"+encodeURI(x[2]);
+	  } else if (x[1] === "twitch") {
+	    src = "https://player.twitch.tv/?channel="+encodeURIComponent(x[2])+"&parent=insagirl.github.io&parent=lolcast.kr";
 	  } else {
-	    var istwitch = false;
-      
 		  for(var i=1, len=x.length; i<len; i++){
-			  src += qname[i] + "=" + encodeURIComponent(escape(x[i]));
-			  if(istwitch && i === 2){
-				  src += "%26parent=insagirl.github.io";
-				  //src += "%26parent=127.0.0.1";
-			  }
-				  
-			  if(i === 1 && x[i] === "twitch"){
-				istwitch = true;
-			  }
+			  src += qname[i] + "=" + encodeURIComponent(x[i]);
 				  
 			  if(i < len-1)
 				  src += "&"
