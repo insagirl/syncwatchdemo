@@ -182,7 +182,7 @@ iframe = (function() {
                     return;
                 try {
                     iframe = e.source;
-                    if(accessible(iframe){
+                    if(accessible(iframe)){
                       if (iframe.location.href.indexOf(window.location.href) === -1)
                         f(JSON.parse(e.data));
                     } else {
