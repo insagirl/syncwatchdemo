@@ -154,7 +154,8 @@ function escapeURL(str) {
     code = str.charCodeAt(i);
     if (!(code > 47 && code < 58) && // numeric (0-9)
         !(code > 64 && code < 91) && // upper alpha (A-Z)
-        !(code > 96 && code < 123)) { // lower alpha (a-z)
+        !(code > 96 && code < 123) && // upper alpha (A-Z)
+        !(code === 95)) { // underbar (_)
       x += "%"+code;
     } else {
 	  x += str.charAt(i);
@@ -623,20 +624,14 @@ window.onload = function() {
                 myskip = v.skip;
                 
                 if(myduration < 86400000){
-                    isloaded = false;
-                    
-                    loadlciframe(false);
-                    
+                    isloaded = false;                    
+                    loadlciframe(false);                    
                     player.cueVideoById(myvid, v.start / 1000);
                 } else {
-                    //실시간 동영상
-                    
+                    //실시간 동영상                    
                     isloaded = false;
-                    player.stopVideo();
-                    
+                    player.stopVideo();                    
                     loadlciframe(myvid);
-                    
-                    
                 }
                 
             }
