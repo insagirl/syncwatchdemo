@@ -568,12 +568,14 @@ window.onload = function() {
             var maybetime = mytime + (new Date()).getTime() - myupdated;
             
             if(myduration > 86400000){
+				if(playfail && maybetime - mystart > 3000)
+					playfail = false;
                 return [maybetime, "t"];
             }
             
             if (isloaded) {
                 if(playfail && player.getCurrentTime() > 3 && player.getPlayerState() === 1)
-                  playfail = false;
+					playfail = false;
                 if ((player.getPlayerState() === 5 || player.getPlayerState() === 2) && maybetime > mystart) {
                     player.playVideo();
                     return [maybetime, "t"];
