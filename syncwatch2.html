@@ -494,7 +494,7 @@ window.onload = function() {
         function viewupdate(updatetable) {
             //$("#debugTime").text(debugtime);
             
-            if(myduration < 864000000)
+            if(myduration < 86400000)
                 $("#playTime").text(secondsTommss(~~((mytime-mystart) / 1000)) + "/" + secondsTommss(~~(myduration / 1000)));
             else
                 $("#playTime").text(secondsTommss(~~((mytime-mystart) / 1000)) + "/" + secondsTommss(~~(0 / 1000)));
