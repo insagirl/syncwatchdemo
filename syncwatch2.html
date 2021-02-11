@@ -144,7 +144,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type='text/javascript'>
-
 function escapeURL(str) {
   var code, i, len;
   
@@ -162,15 +161,27 @@ function escapeURL(str) {
 	}
   }
   return x;
-};
+}
 
 function escapeHtml(str) {
-  var code, i, len;
+  var pcode, code, i, len;
+  
+  var code = 0;
   
   var x = "";
   
+  var c = false;
+  
   for (i = 0, len = str.length; i < len; i++) {
+    pcode = code;
     code = str.charCodeAt(i);
+	if (0xD800 <= code && code <= 0xDBFF) {
+	    continue;
+	}
+	if (0xD800 <= pcode && pcode <= 0xDBFF) {
+	    x += "&#"+((((Number(pcode)-0xD800)*0x400) + (Number(code)-0xDC00) + 0x10000))+";";
+	    continue;
+	}
     if (!(code > 47 && code < 58) && // numeric (0-9)
         !(code > 64 && code < 91) && // upper alpha (A-Z)
         !(code > 96 && code < 123)) { // lower alpha (a-z)
@@ -180,7 +191,7 @@ function escapeHtml(str) {
 	}
   }
   return x;
-};
+}
 
 iframe = (function() {
     var iframe;
@@ -257,7 +268,7 @@ function loadlciframe(url){
 	    src = "https://player.twitch.tv/?channel="+escapeURL(x[2])+"&parent=insagirl.github.io&parent=lolcast.kr";
 	  } else {
 		  for(var i=1, len=x.length; i<len; i++){
-			  src += qname[i] + "=" + escapeURL(x[i]);
+			  src += qname[i] + "=" + encodeURIComponent(x[i]);
 				  
 			  if(i < len-1)
 				  src += "&"
