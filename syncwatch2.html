@@ -424,7 +424,7 @@ window.onload = function() {
                   }
               }
               
-              var x = [vid, "loading", 0, "?", "? 전에 마지막으로 재생됨"];
+              var x = [vid, "loading", 0, "?", "loading"];
                   
               videoInfoList.push(x);
               
@@ -440,7 +440,25 @@ window.onload = function() {
                 dataType: 'jsonp',
 				success: function( data ) {
 				x[3] = Number(data["v"][0]);
-				x[4] = data["v"][1];
+				
+				if(data["v"][1] < 0){
+				  x[4] = "재생된 적 없음"
+			    }
+			    else{
+				  var now = (new Date()).getTime();
+				  var totalSec = Math.floor((now - data["v"][1]) / 1000);
+				  var hours = parseInt(totalSec / 3600);
+				  var minutes = parseInt(totalSec / 60) % 60;
+				  var seconds = totalSec % 60;
+				  
+				  hours = (hours == 0) ? "" : (hours + "시간 ");
+				  minutes = (minutes == 0) ? "" : (minutes + "분 ");
+				  seconds = (seconds == 0) ? "" : (seconds + "초 ");
+				  
+				  x[4] = "전에 마지막으로 재생됨"
+				}
+				
+				
 			    }
 			  })
               
@@ -570,9 +588,9 @@ window.onload = function() {
                     tbody += '<td class="videoListTitle"><a href="https://lolcast.kr/#/player' + encodeURI(videoList[i].vid) + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td>실시간</td><td class="videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
                 
 				if(i==0 && vinfo[3] != "?")
-					tbody += '<th scope="row" class="hidden-xs">' + (vinfo[3] - 1) + '</th>';
+					tbody += '<td data-toggle="tooltip" style="cursor: pointer;" data-placement="left" title="' + vinfo[4] + '" scope="row" class="hidden-xs">' + (vinfo[3] - 1) + '</td>';
 				else
-					tbody += '<th scope="row" class="hidden-xs">' + vinfo[3] + '</th>';
+					tbody += '<td data-toggle="tooltip" style="cursor: pointer;" data-placement="left" title="' + vinfo[4] + '" scope="row" class="hidden-xs">' + vinfo[3] + '</td>';
 				
 				if(vinfo[2] === 1)
                   tbody += '<td class="videoListControl"><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-up" style="color: green;"></i></span><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-down"></i></span>'
