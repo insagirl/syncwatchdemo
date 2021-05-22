@@ -435,10 +435,14 @@ window.onload = function() {
               else
                   x[1] = vid;
 			  
-			  $.getJSON( "http://insagirl-hrm.appspot.com/sc/?v="+encodeURIComponent(vid), function( data ) {
+			  $.ajax({
+			    url: "http://insagirl-hrm.appspot.com/sc/?v="+encodeURIComponent(vid),
+                dataType: 'jsonp',
+				success: function( data ) {
 				x[3] = Number(data[v][0]);
 				x[4] = data[v][1];
-			  });
+			    }
+			  })
               
               if(videoInfoList.length > 20)
                 shrink(videoList)
