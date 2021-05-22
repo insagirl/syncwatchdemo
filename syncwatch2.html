@@ -588,7 +588,7 @@ window.onload = function() {
                     tbody += '<td class="videoListTitle"><a href="https://lolcast.kr/#/player' + encodeURI(videoList[i].vid) + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td>실시간</td><td class="videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
                 
 				if(i==0 && vinfo[3] != "?")
-					tbody += '<td data-toggle="tooltip" style="cursor: pointer;" data-placement="left" title="' + vinfo[4] + '" scope="row" class="hidden-xs">' + (vinfo[3] - 1) + '</td>';
+					tbody += '<td data-toggle="tooltip" style="cursor: pointer;" data-placement="left" title="' + vinfo[4] + '" scope="row" class="hidden-xs">' + ((vinfo[3] - 1) < 0 ? 0 : (vinfo[3] - 1)) + '</td>';
 				else
 					tbody += '<td data-toggle="tooltip" style="cursor: pointer;" data-placement="left" title="' + vinfo[4] + '" scope="row" class="hidden-xs">' + vinfo[3] + '</td>';
 				
