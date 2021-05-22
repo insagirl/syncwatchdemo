@@ -85,19 +85,19 @@
             <table class="table table-condensed table-striped" style="
               table-layout: fixed;
               ">
-              <colgroup>
-                <col class="hidden-xs" span="1" style="width: 30px;">
+              <colgroup>                
                 <col span="1" style="width: 90%;">
                 <col span="1" style="width: 80px;">
                 <col span="1" style="width: 80px;">
+				<col class="hidden-xs" span="1" style="width: 40px;">
                 <col span="1" style="width: 80px;">
               </colgroup>
               <thead>
                 <tr>
-                  <th scope="col" class="hidden-xs">#</th>
-                  <th scope="col">제목</th>
+                  <th scope="col">제목</th>				  
                   <th scope="col">재생시간</th>
                   <th scope="col">신청자</th>
+				  <th scope="col" class="hidden-xs">중복</th>
                   <th scope="col"><button type="button" class="close" data-dismiss="modal">×</button></th>
                 </tr>
               </thead>
@@ -424,7 +424,7 @@ window.onload = function() {
                   }
               }
               
-              var x = [vid, "loading", 0];
+              var x = [vid, "loading", 0, "?", "? 전에 마지막으로 재생됨"];
                   
               videoInfoList.push(x);
               
@@ -434,6 +434,11 @@ window.onload = function() {
                 });
               else
                   x[1] = vid;
+			  
+			  $.getJSON( "http://insagirl-hrm.appspot.com/sc/?v="+encodeURIComponent(vid), function( data ) {
+				x[3] = Number(data[v][0]);
+				x[4] = data[v][1];
+			  });
               
               if(videoInfoList.length > 20)
                 shrink(videoList)
@@ -555,13 +560,17 @@ window.onload = function() {
             for (var i = 0, len = videoList.length; i < len; i++) {
                 var vinfo = videoInfo.get(videoList[i].vid);
                 tbody += '<tr id="' + videoList[i].vid + '">';
-                tbody += '<th scope="row" class="hidden-xs">' + (i + 1) + '</th>';
                 if(videoList[i].duration < 86400000)
                     tbody += '<td class="videoListTitle"><a href="https://youtu.be/' + videoList[i].vid + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td>' + secondsTommss(~~(videoList[i].duration / 1000)) + '</td><td class="videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
                 else
                     tbody += '<td class="videoListTitle"><a href="https://lolcast.kr/#/player' + encodeURI(videoList[i].vid) + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td>실시간</td><td class="videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
                 
-                if(vinfo[2] === 1)
+				if(i==0 && vinfo[3] != "?")
+					tbody += '<th scope="row" class="hidden-xs">' + vinfo[3] - 1 + '</th>';
+				else
+					tbody += '<th scope="row" class="hidden-xs">' + vinfo[3] + '</th>';
+				
+				if(vinfo[2] === 1)
                   tbody += '<td class="videoListControl"><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-up" style="color: green;"></i></span><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-down"></i></span>'
                 else if (vinfo[2] === -1)
                   tbody += '<td class="videoListControl"><span onclick="return tableskip(event, 1);"><i class="fa fa-thumbs-up"></i></span><span onclick="return tableskip(event, 1);"><i class="fa fa-thumbs-down" style="color: red;"></i></span>'
