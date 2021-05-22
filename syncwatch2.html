@@ -28,17 +28,24 @@
         transition: all 0.5s ease-in-out 0s;
         margin-right: 10px;
       }
-      [data-tootip-text]:hover {
+      [data-tooltip-text]:hover {
 	    position: relatvie;
 	  }
-	  [data-tootip-text]:hover:after {
-	    content: attr(data-tooltip-text);
+	  [data-tooltip-text]:hover:after {
+	    content: attr(data-tootip-text);
 		
-		position:absolute;
-		bottom: 100%;
-		left: 0;
-		
-		background-color: rgba(0, 0, 0, 0.4);
+		position: absolute; top:20px; right:30px;
+		-webkit-box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+	    -moz-box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+	    box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+		padding-left: 2px;
+		padding-right:2px;
+
+	    -webkit-border-radius: 5px;
+	    -moz-border-radius: 5px;
+	    border-radius: 5px;
+
+		background-color: rgba(0, 0, 0, 0.7); color:white;
 		
 		z-index:999;
 	  }
@@ -601,9 +608,9 @@ window.onload = function() {
                     tbody += '<td class="videoListTitle"><a href="https://lolcast.kr/#/player' + encodeURI(videoList[i].vid) + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td>실시간</td><td class="videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
                 
 				if(i==0 && vinfo[3] != "?")
-					tbody += '<td style="cursor: pointer;" data-tootip-text="' + vinfo[4] + '" scope="row" class="hidden-xs">' + ((vinfo[3] - 1) < 0 ? 0 : (vinfo[3] - 1)) + '</td>';
+					tbody += '<td style="cursor: pointer;" data-tooltip-text="' + vinfo[4] + '" scope="row" class="hidden-xs">' + ((vinfo[3] - 1) < 0 ? 0 : (vinfo[3] - 1)) + '</td>';
 				else
-					tbody += '<td style="cursor: pointer;" data-tootip-text="' + vinfo[4] + '" scope="row" class="hidden-xs">' + vinfo[3] + '</td>';
+					tbody += '<td style="cursor: pointer;" data-tooltip-text="' + vinfo[4] + '" scope="row" class="hidden-xs">' + vinfo[3] + '</td>';
 				
 				if(vinfo[2] === 1)
                   tbody += '<td class="videoListControl"><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-up" style="color: green;"></i></span><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-down"></i></span>'
