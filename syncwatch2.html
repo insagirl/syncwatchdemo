@@ -467,15 +467,17 @@ window.onload = function() {
 			    else{
 				  var now = (new Date()).getTime();
 				  var totalSec = Math.floor((now - data["v"][1]) / 1000);
-				  var hours = parseInt(totalSec / 3600);
+				  var days = parseInt(totalSec / 86400);
+				  var hours = parseInt(totalSec / 3600) % 24;
 				  var minutes = parseInt(totalSec / 60) % 60;
 				  var seconds = totalSec % 60;
 				  
+				  days = (days == 0) ? "" : (days + "일 ");
 				  hours = (hours == 0) ? "" : (hours + "시간 ");
 				  minutes = (minutes == 0) ? "" : (minutes + "분 ");
 				  seconds = (seconds == 0) ? "" : (seconds + "초 ");
 				  
-				  x[4] = hours+minutes+seconds+"전에 마지막으로 재생됨"
+				  x[4] = days+hours+minutes+seconds+"전에 마지막으로 재생됨"
 				}
 				
 				
