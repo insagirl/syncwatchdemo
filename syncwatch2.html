@@ -49,6 +49,26 @@
 		
 		z-index:999;
 	  }
+	  @media (max-width: 767px){
+		#videoList.twinkle0 .twinkle1{
+			display: none !important;
+		}
+		#videoList.twinkle0 .twinkle2{
+			display: none !important;
+		}
+		#videoList.twinkle1 .twinkle0{
+			display: none !important;
+		}
+		#videoList.twinkle1 .twinkle2{
+			display: none !important;
+		}
+		#videoList.twinkle2 .twinkle0{
+			display: none !important;
+		}
+		#videoList.twinkle2 .twinkle1{
+			display: none !important;
+		}
+	  }
     </style>
   </head>
   <body style="background-color:#fff; height:100%;">
@@ -107,21 +127,21 @@
               ">
               <colgroup>                
                 <col span="1" style="width: 90%;">
-                <col span="1" style="width: 80px;">
-                <col span="1" style="width: 80px;">
-				<col class="hidden-xs" span="1" style="width: 40px;">
+                <col class="twinkle0" span="1" style="width: 80px;">
+                <col class="twinkle1" span="1" style="width: 80px;">
+				<col class="twinkle2" span="1" style="width: 40px;">
                 <col span="1" style="width: 80px;">
               </colgroup>
               <thead>
                 <tr>
                   <th scope="col">제목</th>				  
-                  <th scope="col">재생시간</th>
-                  <th scope="col">신청자</th>
-				  <th scope="col" class="hidden-xs">중복</th>
+                  <th scope="col" class="twinkle0">재생시간</th>
+                  <th scope="col" class="twinkle1">신청자</th>
+				  <th scope="col" class="twinkle2">중복</th>
                   <th scope="col"><button type="button" class="close" data-dismiss="modal">×</button></th>
                 </tr>
               </thead>
-              <tbody id="videoList">
+              <tbody id="videoList" class="twinkle0">
               </tbody>
             </table>
             <div class="input-group input-group-sm">
@@ -407,6 +427,10 @@ window.onload = function() {
         var player;
         
         var playfail = true;
+		
+		var tablecache = "";
+		
+		var tabletwinkle = 0;
         
         var videoInfo = (function(){
           var videoInfoList = [];
@@ -605,14 +629,14 @@ window.onload = function() {
                 var vinfo = videoInfo.get(videoList[i].vid);
                 tbody += '<tr id="' + videoList[i].vid + '">';
                 if(videoList[i].duration < 86400000)
-                    tbody += '<td class="videoListTitle"><a href="https://youtu.be/' + videoList[i].vid + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td>' + secondsTommss(~~(videoList[i].duration / 1000)) + '</td><td class="videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
+                    tbody += '<td class="videoListTitle"><a href="https://youtu.be/' + videoList[i].vid + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td class="twinkle0">' + secondsTommss(~~(videoList[i].duration / 1000)) + '</td><td class="twinkle1 videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
                 else
-                    tbody += '<td class="videoListTitle"><a href="https://lolcast.kr/#/player' + encodeURI(videoList[i].vid) + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td>실시간</td><td class="videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
+                    tbody += '<td class="videoListTitle"><a href="https://lolcast.kr/#/player' + encodeURI(videoList[i].vid) + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td class="twinkle0">실시간</td><td class="twinkle1 videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
                 
 				if(i==0 && vinfo[3] != "?")
-					tbody += '<td style="cursor: pointer;" data-tooltip-text="' + vinfo[4] + '" scope="row" class="hidden-xs">' + ((vinfo[3] - 1) < 0 ? 0 : (vinfo[3] - 1)) + '</td>';
+					tbody += '<td style="cursor: pointer;" data-tooltip-text="' + vinfo[4] + '" scope="row" class="twinkle2">' + ((vinfo[3] - 1) < 0 ? 0 : (vinfo[3] - 1)) + '</td>';
 				else
-					tbody += '<td style="cursor: pointer;" data-tooltip-text="' + vinfo[4] + '" scope="row" class="hidden-xs">' + vinfo[3] + '</td>';
+					tbody += '<td style="cursor: pointer;" data-tooltip-text="' + vinfo[4] + '" scope="row" class="twinkle2">' + vinfo[3] + '</td>';
 				
 				if(vinfo[2] === 1)
                   tbody += '<td class="videoListControl"><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-up" style="color: green;"></i></span><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-down"></i></span>'
@@ -624,6 +648,16 @@ window.onload = function() {
                 if(videoList[i].nick === mynick || mylevel === "관리자" || mylevel === "생성자" || mylevel === "운영자")
                   tbody += '<span onclick="return tabledelete(event);"><i class="fa fa-trash" style="color: red;"></i></span></td></tr>';
             }
+			
+			tabletwinkle++;
+			tabletwinkle = tabletwinkle % 3;
+			
+			document.getElementById("videoList").className = "twinkle" + tabletwinkle;
+			
+			if(tablecache === tbody)
+			  return;
+			  
+		    tablecache = tbody;
 
             document.getElementById("videoList").innerHTML = tbody;
         }
