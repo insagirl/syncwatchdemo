@@ -122,7 +122,7 @@
       <div class="modal-dialog modal-align-bottom-right" style="bottom: auto; right: 0; top: 0; margin: 0; position: absolute; overflow-y: auto; max-height: 100%;">
         <div class="modal-content">
           <div class="modal-body">
-            <table id="videoListTable" class="twinkle0" class="table table-condensed table-striped" style="
+            <table id="videoListTable" class="table table-condensed table-striped twinkle0" style="
               table-layout: fixed;
               ">
               <colgroup>                
@@ -651,9 +651,7 @@ window.onload = function() {
 			
 			tabletwinkle++;
 			tabletwinkle = tabletwinkle % 3;
-			
-			document.getElementById("videoListTable").className = "twinkle" + tabletwinkle;
-			
+			$("#videoListTable").removeClass("twinkle0").removeClass("twinkle1").removeClass("twinkle2").addClass("twinkle" + tabletwinkle);
 			if(tablecache === tbody)
 			  return;
 			  
