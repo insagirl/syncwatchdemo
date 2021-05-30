@@ -50,22 +50,22 @@
 		z-index:999;
 	  }
 	  @media (max-width: 767px){
-		#videoList.twinkle0 .twinkle1{
+		#videoListTable.twinkle0 .twinkle1{
 			display: none !important;
 		}
-		#videoList.twinkle0 .twinkle2{
+		#videoListTable.twinkle0 .twinkle2{
 			display: none !important;
 		}
-		#videoList.twinkle1 .twinkle0{
+		#videoListTable.twinkle1 .twinkle0{
 			display: none !important;
 		}
-		#videoList.twinkle1 .twinkle2{
+		#videoListTable.twinkle1 .twinkle2{
 			display: none !important;
 		}
-		#videoList.twinkle2 .twinkle0{
+		#videoListTable.twinkle2 .twinkle0{
 			display: none !important;
 		}
-		#videoList.twinkle2 .twinkle1{
+		#videoListTable.twinkle2 .twinkle1{
 			display: none !important;
 		}
 	  }
@@ -122,7 +122,7 @@
       <div class="modal-dialog modal-align-bottom-right" style="bottom: auto; right: 0; top: 0; margin: 0; position: absolute; overflow-y: auto; max-height: 100%;">
         <div class="modal-content">
           <div class="modal-body">
-            <table class="table table-condensed table-striped" style="
+            <table id="videoListTable" class="twinkle0" class="table table-condensed table-striped" style="
               table-layout: fixed;
               ">
               <colgroup>                
@@ -141,7 +141,7 @@
                   <th scope="col"><button type="button" class="close" data-dismiss="modal">×</button></th>
                 </tr>
               </thead>
-              <tbody id="videoList" class="twinkle0">
+              <tbody id="videoList">
               </tbody>
             </table>
             <div class="input-group input-group-sm">
@@ -652,7 +652,7 @@ window.onload = function() {
 			tabletwinkle++;
 			tabletwinkle = tabletwinkle % 3;
 			
-			document.getElementById("videoList").className = "twinkle" + tabletwinkle;
+			document.getElementById("videoListTable").className = "twinkle" + tabletwinkle;
 			
 			if(tablecache === tbody)
 			  return;
