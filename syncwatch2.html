@@ -469,7 +469,7 @@ window.onload = function() {
                   
               }
             },
-            get: function get(vid){
+            get: function get(vid, idx){
               for(var i=0, len=videoInfoList.length; i<len; i++){
                   if (videoInfoList[i][0] === vid) {
                      return videoInfoList[i];
@@ -493,8 +493,11 @@ window.onload = function() {
 				success: function( data ) {
 				x[3] = Number(data["v"][0]);
 				
+				if(idx == 0 && x[3] > 0)
+				  x[3]--;  
+				
 				if(data["v"][1] < 0){
-				  x[4] = "재생된 적 없음"
+				  x[4] = "재생된 적 없음";
 			    }
 			    else{
 				  var now = (new Date()).getTime();
@@ -634,17 +637,14 @@ window.onload = function() {
             var tbody = "";
 
             for (var i = 0, len = videoList.length; i < len; i++) {
-                var vinfo = videoInfo.get(videoList[i].vid);
+                var vinfo = videoInfo.get(videoList[i].vid, i);
                 tbody += '<tr id="' + videoList[i].vid + '">';
                 if(videoList[i].duration < 86400000)
                     tbody += '<td class="videoListTitle"><a href="https://youtu.be/' + videoList[i].vid + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td class="twinkle0">' + secondsTommss(~~(videoList[i].duration / 1000)) + '</td><td class="twinkle1 videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
                 else
                     tbody += '<td class="videoListTitle"><a href="https://lolcast.kr/#/player' + encodeURI(videoList[i].vid) + '" target="_blank">' + escapeHtml(vinfo[1]) + '</a></td><td class="twinkle0">실시간</td><td class="twinkle1 videoListTitle">'+escapeHtml(videoList[i].nick)+'</td>';
                 
-				if(i==0 && vinfo[3] != "?")
-					tbody += '<td style="cursor: pointer;" data-tooltip-text="' + vinfo[4] + '" scope="row" class="twinkle2">' + ((vinfo[3] - 1) < 0 ? 0 : (vinfo[3] - 1)) + '</td>';
-				else
-					tbody += '<td style="cursor: pointer;" data-tooltip-text="' + vinfo[4] + '" scope="row" class="twinkle2">' + vinfo[3] + '</td>';
+				tbody += '<td style="cursor: pointer;" data-tooltip-text="' + vinfo[4] + '" scope="row" class="twinkle2">' + vinfo[3] + '</td>';
 				
 				if(vinfo[2] === 1)
                   tbody += '<td class="videoListControl"><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-up" style="color: green;"></i></span><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-down"></i></span>'
