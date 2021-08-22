@@ -722,6 +722,11 @@ window.onload = function() {
 
         function cueVideo(v, time) {
             if (isloaded) {
+				
+				if(v.duration < 86400000 && myduration >= 86400000){
+					playfail = true;
+				}
+				
                 myvid = v.vid;
                 mystart = v.start;
                 myduration = v.duration;
