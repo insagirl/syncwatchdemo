@@ -9,6 +9,16 @@
   </head>
   <body style="background-color:#fff; height:100%; margin:0">
     <iframe src="https://insagirl.github.io/syncwatchdemo/syncwatch2.html" allow="autoplay; fullscreen" width="80%" height="100%" style="border:none; float:left"></iframe>
-    <iframe src="https://insagirl-toto.appspot.com/chatting/lgic/" width="20%" height="100%" style="border:none; float:left"></iframe>
+    <iframe id="lgicframe" src="about:blank" width="20%" height="100%" style="border:none; float:left"></iframe>
   </body>
+  <script type='text/javascript'>
+    window.onload=function(){
+	  var lgicurl = 'https://insagirl-toto.appspot.com/chatting/lgic/'
+	  if(location.hash && location.hash.substring(1)){
+	    documen.getElementById("lgicframe").src = lgicurl+'#'+decodeURIComponent(location.hash.substring(1));
+	  } else {
+	    documen.getElementById("lgicframe").src = lgicurl;
+	  }
+	}
+  </script>
 </html>
