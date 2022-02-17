@@ -7,11 +7,50 @@
       demo
     </title>
   </head>
-  <body style="background-color:#fff; height:100%; margin:0">
-    <iframe src="https://insagirl.github.io/syncwatchdemo/syncwatch2.html" allow="autoplay; fullscreen" width="80%" height="100%" style="border:none; float:left"></iframe>
-    <iframe id="lgicframe" src="about:blank" width="20%" height="100%" style="border:none; float:left"></iframe>
+  <body style="background-color:#fff; height:100%; margin:0; position:relative">
+    <div>
+    <iframe id="syncwatchframe" src="https://insagirl.github.io/syncwatchdemo/syncwatch2.html" allow="autoplay; fullscreen" style="border: none; width: 80%; height: 100%; position: absolute; top: 0; right: 320px;"></iframe>
+    <iframe id="lgicframe" src="about:blank" style="border: none; position: absolute; top:0; right: 0; width: 20%; height:100%"></iframe>
   </body>
   <script type='text/javascript'>
+    function getVideoarea(w, h, wr, hr){
+	  h = h - 25;
+	  if(w <= 0 || h <= 0){
+	    return 0;
+	  } else if(w*hr > h*wr){
+	    return h * h * wr / hr;
+	  } else {
+	    return w * w * hr / wr;
+	  }
+	}
+  
+    function design(){
+	  var win = window;
+      var doc = document;
+      var docElem = doc.documentElement;
+      var body = doc.getElementsByTagName('body')[0];
+      var w = win.innerWidth || docElem.clientWidth || body.clientWidth;
+      var h = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
+	  var wg = getVideoarea(w-320, h, 16, 9) + 320*(h > 320 ? 320 : h);
+	  var hgh = h - 320 > w * 9 / 16 + 25 ? w * 9 / 16 + 25 : h - 320;
+	  var hg = getVideoarea(w, hgh, 16, 9) + (w > 320 ? 320 : w)*(h-hgh  > 320 ? 320 : h-hgh);
+	  if(hg > wg){
+	    document.getElementById("syncwatchframe").style.height = hgh+"px";
+		document.getElementById("syncwatchframe").style.width = "100%";
+		document.getElementById("syncwatchframe").style.right = "0";
+		document.getElementById("lgicframe").style.top = hgh+"px";
+		document.getElementById("lgicframe").style.height = h-hgh+"px";
+		document.getElementById("lgicframe").style.width = "100%";
+	  } else {
+	    document.getElementById("syncwatchframe").style.width = w-320+"px";
+		document.getElementById("syncwatchframe").style.height = "100%";
+		document.getElementById("syncwatchframe").style.right = "320px";
+		document.getElementById("lgicframe").style.top = "0";
+		document.getElementById("lgicframe").style.height = "100%";
+		document.getElementById("lgicframe").style.width = "320px";
+	  }	    
+    }
+	
     window.onload=function(){
 	  var lgicurl = 'https://insagirl-toto.appspot.com/chatting/lgic/'
 	  if(location.hash && location.hash.substring(1)){
@@ -19,6 +58,9 @@
 	  } else {
 	    document.getElementById("lgicframe").src = lgicurl;
 	  }
+	  design();
 	}
+	
+	window.onresize = design;
   </script>
 </html>
