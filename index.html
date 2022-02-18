@@ -32,8 +32,8 @@
       var w = win.innerWidth || docElem.clientWidth || body.clientWidth;
       var h = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
 	  var wg = getVideoarea(w-320, h, 16, 9) + 320*h;
-	  var hgh = h - 160 > w * 9 / 16 + 25 ? w * 9 / 16 + 25 : h - 160;
-	  var hg = getVideoarea(w, hgh, 16, 9) + (w > 320 ? 320 : w)*(h-hgh  > 160 ? 160 : h-hgh);
+	  var hgh = h - 200 > w * 9 / 16 + 25 ? w * 9 / 16 + 25 : h - 200;
+	  var hg = getVideoarea(w, hgh, 16, 9) + (w > 320 ? 320 : w)*(h-hgh);
 	  if(hg > wg){
 	    document.getElementById("syncwatchframe").style.height = hgh+"px";
 		document.getElementById("syncwatchframe").style.width = "100%";
