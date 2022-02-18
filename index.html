@@ -35,9 +35,9 @@
       var body = doc.getElementsByTagName('body')[0];
       var w = win.innerWidth || docElem.clientWidth || body.clientWidth;
       var h = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
-	  var wg = getUtility(getVideoarea(w-320, h, 16, 9), 192*108*10) + getUtility(240*h, 24*50*10);
+	  var wg = getUtility(getVideoarea(w-320, h, 16, 9), 192*108*10) + getUtility(240*h, 24*20*10);
 	  var hgh = h - 200 > w * 9 / 16 + 25 ? w * 9 / 16 + 25 : h - 200;
-	  var hg = getUtility(getVideoarea(w, hgh, 16, 9), 192*108*10) + getUtility((w > 240 ? 240 : w)*(h-hgh), 24*50*10);
+	  var hg = getUtility(getVideoarea(w, hgh, 16, 9), 192*108*10) + getUtility((w > 240 ? 240 : w)*(h-hgh), 24*20*10);
 	  if(hg > wg){
 	    document.getElementById("syncwatchframe").style.height = hgh+"px";
 		document.getElementById("syncwatchframe").style.width = "100%";
