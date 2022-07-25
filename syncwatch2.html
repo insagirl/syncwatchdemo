@@ -135,15 +135,15 @@
               ">
               <colgroup>                
                 <col span="1" style="width: 90%;">
-                <col class="twinkle0" span="1" style="width: 80px;">
+                <col class="twinkle0" span="1" style="width: 55px;">
                 <col class="twinkle1" span="1" style="width: 80px;">
 				<col class="twinkle2" span="1">
-                <col span="1" style="width: 80px;">
+                <col span="1" style="width: 105px;">
               </colgroup>
               <thead>
                 <tr>
                   <th scope="col">제목</th>				  
-                  <th scope="col" class="twinkle0">재생시간</th>
+                  <th scope="col" class="twinkle0">시간</th>
                   <th scope="col" class="twinkle1">신청자</th>
 				  <th scope="col" class="twinkle2">중복</th>
                   <th scope="col"><button type="button" class="close" data-dismiss="modal">×</button></th>
@@ -654,8 +654,12 @@ window.onload = function() {
                 else
                   tbody += '<td class="videoListControl"><span onclick="return tableskip(event, 1);"><i class="fa fa-thumbs-up"></i></span><span onclick="return tableskip(event, -1);"><i class="fa fa-thumbs-down"></i></span>'
                 
+                tbody += '<span onclick="return skiplist(event);"><i class="fa fa-info"></i></span>'
+                
                 if(videoList[i].nick === mynick || mylevel === "관리자" || mylevel === "생성자" || mylevel === "운영자")
-                  tbody += '<span onclick="return tabledelete(event);"><i class="fa fa-trash" style="color: red;"></i></span></td></tr>';
+                  tbody += '<span onclick="return tabledelete(event);"><i class="fa fa-trash" style="color: red;"></i></span>';
+                
+                tbody += '</td></tr>'
             }
 			
 			tabletwinkle++;
@@ -1004,6 +1008,29 @@ window.onload = function() {
       iframe.send({
         m: vid,
         n: "d"
+      });
+    };
+    
+    skiplist = function(e){
+      if (typeof e === "undefined" || !e || typeof e.target === "undefined" || !e.target)
+        return true;
+      else
+        e.preventDefault();
+      
+      var tr = e.target;
+      
+      while(tr.tagName.toUpperCase() !== "TR")
+        tr = tr.parentElement;
+      
+      var vid = tr.id;   
+      
+      if(!vid){
+        return;
+      }
+      
+      iframe.send({
+        m: vid,
+        n: "sl"
       });
     };
     
